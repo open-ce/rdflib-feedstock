@@ -1,6 +1,6 @@
 {% set name = "rdflib" %}
-{% set version = "4.2.2" %}
-{% set sha256 = "da1df14552555c5c7715d8ce71c08f404c988c58a1ecd38552d0da4fc261280d" %}
+{% set version = "5.0.0" %}
+{% set sha256 = "05adfb43a7ae8fd35cb7f2f4fe9b4da607d81f926db35d25a941e63693495b22" %}
 
 package:
   name: {{ name|lower }}
@@ -8,31 +8,23 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://github.com/rdflib/{{ name }}/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
-  number: 1000
-  script: python setup.py install --single-version-externally-managed --record record.txt
-  entry_points:
-    - rdfpipe = rdflib.tools.rdfpipe:main
-    - csv2rdf = rdflib.tools.csv2rdf:main
-    - rdf2dot = rdflib.tools.rdf2dot:main
-    - rdfs2dot = rdflib.tools.rdfs2dot:main
-    - rdfgraphisomorphism = rdflib.tools.graphisomorphism:main
+  number: 0
+  script: "python -m pip install . --no-deps -vv"
 
 requirements:
-  build:
+  host:
     - python
-    - setuptools
-    - isodate
-    - pyparsing
-
+    - pip
   run:
     - python
     - isodate
     - pyparsing
     - html5lib
+    - requests
     - sparqlwrapper
 
 test:
@@ -41,25 +33,15 @@ test:
     - rdflib.extras
     - rdflib.plugins
     - rdflib.plugins.parsers
-    - rdflib.plugins.parsers.pyMicrodata
-    - rdflib.plugins.parsers.pyRdfa
-    - rdflib.plugins.parsers.pyRdfa.extras
-    - rdflib.plugins.parsers.pyRdfa.host
-    - rdflib.plugins.parsers.pyRdfa.rdfs
-    - rdflib.plugins.parsers.pyRdfa.transform
+    - rdflib.plugins.parsers
     - rdflib.plugins.serializers
     - rdflib.plugins.sparql
-    - rdflib.plugins.sparql.results
     - rdflib.plugins.stores
     - rdflib.tools
 
-  commands:
-    - rdfpipe --help
-    - rdfgraphisomorphism --help
-
 about:
   home: https://github.com/RDFLib/rdflib
-  license: BSD 3-Clause
+  license: BSD-3-Clause
   license_file: LICENSE
   summary: 'RDFLib is a Python library for working with RDF, a simple yet powerful language for representing information.'
   dev_url: https://github.com/RDFLib/rdflib
