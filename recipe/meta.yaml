@@ -39,10 +39,6 @@ test:
     - rdflib.plugins.stores
     - rdflib.tools
 
-  commands:
-    - rdfpipe --version
-    - rdfgraphisomorphism --version
-
 about:
   home: https://github.com/RDFLib/rdflib
   license: BSD-3-Clause
