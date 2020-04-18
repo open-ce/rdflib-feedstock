@@ -40,8 +40,8 @@ test:
     - rdflib.tools
 
   commands:
-    - rdfpipe --help
-    - rdfgraphisomorphism --help
+    - rdfpipe --version
+    - rdfgraphisomorphism --version
 
 about:
   home: https://github.com/RDFLib/rdflib
