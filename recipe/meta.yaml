@@ -24,6 +24,7 @@ requirements:
     - isodate
     - pyparsing
     - html5lib
+    - requests
     - sparqlwrapper
 
 test:
