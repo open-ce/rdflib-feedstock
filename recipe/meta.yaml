@@ -13,9 +13,13 @@ source:
 
 build:
   number: 0
+  skip: true  # [py<37]
   script: python -m pip install . --no-deps -vv
 
 requirements:
+  build:
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
   host:
     - python
     - pip
