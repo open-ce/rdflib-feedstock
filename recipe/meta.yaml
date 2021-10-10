@@ -1,6 +1,6 @@
 {% set name = "rdflib" %}
-{% set version = "6.0.0" %}
-{% set sha256 = "3d01105089e59016db095ea0a73fa412aa80e63074fc03f8a5608ca9b938fee3" %}
+{% set version = "6.0.2" %}
+{% set sha256 = "c9a43270b7ffbd48cc04aa57a9eb84c9eec125078c657814c24deecaf803b2d2" %}
 
 package:
   name: {{ name|lower }}
@@ -12,7 +12,7 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 0
   skip: true  # [py < 37]
   script: python -m pip install . --no-deps -vv
 
