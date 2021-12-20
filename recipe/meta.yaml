@@ -1,6 +1,6 @@
 {% set name = "rdflib" %}
-{% set version = "6.0.2" %}
-{% set sha256 = "c9a43270b7ffbd48cc04aa57a9eb84c9eec125078c657814c24deecaf803b2d2" %}
+{% set version = "6.1.1" %}
+{% set sha256 = "6806c6ba0fb49f41c9c9e49afe1af54c9b0cb202199ef8438b7ba61ea16c8cd6" %}
 
 package:
   name: {{ name|lower }}
