@@ -38,6 +38,7 @@ test:
     - test
     - setup.cfg
   requires:
+    - pip
     # berkeleydb -> bsddb3
     # html5lib included in run
     - bsddb3
