@@ -1,47 +1,59 @@
-{% set name = "rdflib" %}
-{% set version = "6.0.2" %}
-{% set sha256 = "c9a43270b7ffbd48cc04aa57a9eb84c9eec125078c657814c24deecaf803b2d2" %}
+{% set version = "6.1.1" %}
+{% set test_skips = "not (dawg_data_sparql or definednamespace_creator)" %}
+{% set cov_fail_under = 72 %}
 
 package:
-  name: {{ name|lower }}
+  name: rdflib
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://github.com/rdflib/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  url: https://pypi.io/packages/source/r/rdflib/rdflib-{{ version }}.tar.gz
+  sha256: 8dbfa0af2990b98471dacbc936d6494c997ede92fd8ed693fb84ee700ef6f754
 
 build:
   number: 0
-  skip: true  # [py < 37]
-  script: python -m pip install . --no-deps -vv
+  script: {{ PYTHON }} -m pip install . --no-deps -vv
+  noarch: python
+  entry_points:
+    - csv2rdf = rdflib.tools.csv2rdf:main
+    - rdf2dot = rdflib.tools.rdf2dot:main
+    - rdfgraphisomorphism = rdflib.tools.graphisomorphism:main
+    - rdfpipe = rdflib.tools.rdfpipe:main
+    - rdfs2dot = rdflib.tools.rdfs2dot:main
 
 requirements:
-  build:
-    - python                                 # [build_platform != target_platform]
-    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
   host:
-    - python
+    - python >=3.7
     - pip
   run:
-    - python
+    - html5lib  # from extras
+    - importlib-metadata
     - isodate
     - pyparsing
-    - html5lib
-    - requests
-    - sparqlwrapper
+    - python >=3.7
+    - setuptools
 
 test:
+  source_files:
+    - test
+    - setup.cfg
+  requires:
+    - pip
+    # berkeleydb -> bsddb3
+    # html5lib included in run
+    - bsddb3
+    - networkx
+    - pytest
+    - pytest-cov
+    - pytest-subtests
+    - tabulate  # undeclared, might be removed in >=6.1.2
   imports:
     - rdflib
-    - rdflib.extras
-    - rdflib.plugins
-    - rdflib.plugins.parsers
-    - rdflib.plugins.parsers
-    - rdflib.plugins.serializers
-    - rdflib.plugins.sparql
-    - rdflib.plugins.stores
-    - rdflib.tools
+  commands:
+    - pip check
+    # some missing file not in repo
+    - rm test/test_so_69984830.py || del test/test_so_69984830.py
+    - pytest test -vv --cov rdflib --cov-report term-missing:skip-covered --no-cov-on-fail -k "{{ test_skips }}" --cov-fail-under {{ cov_fail_under }}
 
 about:
   home: https://github.com/RDFLib/rdflib
@@ -55,3 +67,4 @@ extra:
   recipe-maintainers:
     - satra
     - nicholascar
+    - bollwyvl
