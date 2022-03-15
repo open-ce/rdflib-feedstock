@@ -11,7 +11,7 @@ source:
   sha256: 8dbfa0af2990b98471dacbc936d6494c997ede92fd8ed693fb84ee700ef6f754
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . --no-deps -vv
   noarch: python
   entry_points:
@@ -23,15 +23,15 @@ build:
 
 requirements:
   host:
-    - python >=3.7
+    - python {{ python }}
     - pip
   run:
     - html5lib  # from extras
     - importlib-metadata
     - isodate
     - pyparsing
-    - python >=3.7
-    - setuptools
+    - python {{ python }}
+    - setuptools {{ setuptools }}
 
 test:
   source_files:
@@ -41,8 +41,8 @@ test:
     - pip
     # berkeleydb -> bsddb3
     # html5lib included in run
-    - bsddb3
-    - networkx
+    - bsddb3 {{ bsddb3 }}
+    - networkx {{ networkx }}
     - pytest
     - pytest-cov
     - pytest-subtests
@@ -65,6 +65,4 @@ about:
 
 extra:
   recipe-maintainers:
-    - satra
-    - nicholascar
-    - bollwyvl
+    - open-ce/open-ce-dev-team
